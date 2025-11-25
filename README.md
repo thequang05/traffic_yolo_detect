@@ -23,10 +23,36 @@ Deploy a fine-tuned YOLO-based pipeline that detects and tracks four vehicle cla
   - Supports batch frame processing, video sampling with stride/max frame limits, and optional bounding-box rendering
 
 ## Model Evaluation
+
+### Training Configuration
+- Base Model: YOLOv8m (medium)
+- Epochs: 100
+- Image Size: 640x640
+- Optimizer: SGD (lr=0.01)
+
+### Overall Performance (conf=0.45)
+
+| Metric | Value |
+|--------|-------|
+| mAP@0.5 | 88.83% |
+| mAP@0.5-95 | 65.82% |
+| Precision | 87.03% |
+| Recall | 84.26% |
+
+### Per-Class Performance
+
+| Class | Precision | Recall |
+|-------|-----------|--------|
+| Car | 89.7% | 88.5% |
+| Motor | 75.8% | 86.0% |
+| Truck | 81.8% | 86.7% |
+| Bus | 91.0% | 76.0% |
+
+### Training Artifacts
 - Training logs: metrics, confusion matrices, precision/recall curves, batch previews located in `runs/detect/train/`
 - Key artifacts include `results.csv`, `results.png`, and normalized confusion matrices for diagnosing per-class performance
-- Validation via `model.valid_model()` uses Ultralytics’ standard reporting (mAP50, mAP50-95, precision, recall)
-- `benchmark_on_video` prints aggregate FPS to gauge deployment readiness on specific hardware
+- Validation via `model.valid_model()` uses Ultralytics' standard reporting (mAP50, mAP50-95, precision, recall)
+
 
 ## Deliverables
 - `configs/model_config.yaml`: runtime settings (weights path, device, confidence threshold, class names, optional tracking flag)
@@ -37,11 +63,6 @@ Deploy a fine-tuned YOLO-based pipeline that detects and tracks four vehicle cla
 - `runs/detect/train/weights/best.pt`: latest fine-tuned checkpoint ready for deployment
 - `training.ipynb`: interactive notebook for experimentation (data inspection, training, or inference demos)
 
-## Business Insights
-- Reliable per-class tracking in dense traffic enables accurate vehicle counts and dwell-time metrics, supporting congestion analytics
-- Small-box ratios and class distribution stats highlight data gaps, steering additional data collection for underrepresented classes
-- Real-time FPS benchmarking surfaces the hardware needed for roadside deployments versus offline analytics pipelines
-- Consistent experiment artifacts make it easy to audit improvements across hyperparameter sweeps or dataset refreshes
 
 ## Tech Stack
 Python, Ultralytics YOLO, PyYAML, OpenCV, NumPy, Matplotlib, Torch (via Ultralytics), and supporting libraries for dataset analysis.
