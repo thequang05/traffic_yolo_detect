@@ -1,0 +1,14 @@
+path: /Users/koiita/Downloads/traffic_yolo_detect/data/data_set
+train: train/images
+val: valid/images
+test: test/images
+
+nc: 4
+names: ['car', 'motor', 'truck','bus']
+
+roboflow:
+  workspace: thequang
+  project: vietnamese-vehicle-poqaz
+  version: 1
+  license: CC BY 4.0
+  url: https://universe.roboflow.com/thequang/vietnamese-vehicle-poqaz/dataset/1
